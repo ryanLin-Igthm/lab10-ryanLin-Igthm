@@ -72,31 +72,31 @@ def decode_string(s):
     #   k times. The brackets can be nested.
     #   Example: "3[a2[c]]"  ->  "accaccacc"
     
-    queue = []
+    decode_list = []
 
     for char in s:
         if char != ']':
-            queue.append(char)
+            decode_list.append(char)
         else:
             # Get encoded string
             encoded = ""
-            while queue and queue[-1] != '[':
-                encoded = queue.pop() + encoded
+            while decode_list and decode_list[-1] != '[':
+                encoded = decode_list.pop() + encoded
 
-            queue.pop()  # Remove '['
+            decode_list.pop()  # Remove '['
 
             # Get repeat number
             num = ""
-            while queue and queue[-1].isdigit():
-                num = queue.pop() + num
+            while decode_list and decode_list[-1].isdigit():
+                num = decode_list.pop() + num
 
             repeated = encoded * int(num)
 
-            # Put decoded part back on queue
+            # Put decoded part back on decode_list
             for c in repeated:
-                queue.append(c)
+                decode_list.append(c)
 
-    return "".join(queue)
+    return "".join(decode_list)
 
 
 def daily_temperatures(temps):
@@ -144,8 +144,8 @@ def main():
    
     # print(eval_rpn(["2", "1", "+", "3", "*"]))    # returns 9    ((2 + 1) * 3)
     # print(eval_rpn(["4", "13", "5", "/", "+"]))   # returns 6    (4 + 13 // 5)
-    # print(decode_string("3[a]2[bc]"))   # returns "aaabcbc"
-    # print(decode_string("3[a2[c]]"))    # returns "accaccacc"
+    print(decode_string("3[a]2[bc]"))   # returns "aaabcbc"
+    print(decode_string("3[a2[c]]"))    # returns "accaccacc"
     # print(daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]))   # returns [1, 1, 4, 2, 1, 1, 0, 0]
     # print(daily_temperatures([30, 40, 50, 60]))                   # returns [1, 1, 1, 0]
     pass
